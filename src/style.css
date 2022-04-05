@@ -1,0 +1,29 @@
+.bigContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.smallContainer {
+  border-bottom: 2px solid black;
+  width: 80%;
+  height: 5em;
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.title {
+  font-size: x-large;
+  font-family: serif;
+  margin-left: 2em;
+}
+.buttonDescription {
+  padding: 2em;
+  border: 2px solid blueviolet;
+  width: 8em;
+  height: 2em;
+  border-radius: 40%;
+  margin-left: 1em;
+  margin-top: 0.5em;
+}
