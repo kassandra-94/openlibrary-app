@@ -1,9 +1,4 @@
 .bigContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-.smallContainer {
   border-bottom: 2px solid black;
   width: 80%;
   height: 5em;
@@ -16,14 +11,40 @@
 .title {
   font-size: x-large;
   font-family: serif;
-  margin-left: 2em;
 }
 .buttonDescription {
-  padding: 2em;
-  border: 2px solid blueviolet;
-  width: 8em;
-  height: 2em;
+  background-color: black;
+  padding: 1.5em;
   border-radius: 40%;
   margin-left: 1em;
   margin-top: 0.5em;
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+}
+.descriptionDiv {
+  z-index: 10;
+  background-color: azure;
+  width: 80%;
+  height: 50%;
+  position: fixed;
+  top: 50px;
+  left: 50px;
+  margin-top: auto;
+  margin-left: auto;
+  visibility: hidden;
+  font-family: sans-serif;
+  text-align: left;
+  padding: 2em;
+  line-height: 1.3rem;
+  white-space: pre-wrap;
+  overflow-y: scroll;
+}
+.closeButton {
+  background-color: blueviolet;
+  padding: 2em;
+  visibility: hidden;
+  position: absolute;
+  top: 50px;
+  left: 50px;
 }

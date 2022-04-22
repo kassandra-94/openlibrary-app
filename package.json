@@ -4,7 +4,7 @@
   "description": "App based on https://openlibrary.org",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "prova",
     "dev": "webpack serve --mode development",
     "build": "webpack --mode production"
   },
@@ -19,10 +19,14 @@
   },
   "homepage": "https://github.com/kassandra-94/openlibrary-app#readme",
   "devDependencies": {
-    "dotenv-webpack": "^7.1.0",
+    "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
     "webpack": "^5.71.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4"
+  },
+  "dependencies": {
+    "axios": "^0.26.1"
   }
 }
