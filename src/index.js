@@ -10,10 +10,10 @@ let output = document.getElementById("output");
 let button = document.getElementById("buttonSearch");
 let inputInitial = document.getElementById("genre_input");
 let input;
-let key;
 let mainSpan;
 let descriptionDiv;
 let descriptionSpan;
+let closeButton;
 
 function setInputEmpty() {
   input = inputInitial.value;
@@ -27,7 +27,14 @@ function setInputEmpty() {
 function getBooksFiltered() {
   axios
     .get(`${booksUrl + input}.json`)
-    .then((res) => showBooksTitleAndAuthors(res))
+    .then((res) => {
+      console.log(res);
+      if (res["data"]["work_count"] === 0) {
+        alert(`That's a bummer! ${input} does not count as genre`);
+      }
+      showBooksTitleAndAuthors(res);
+    })
+
     .catch((err) => console.error(err));
 }
 
@@ -43,16 +50,17 @@ function showBooksTitleAndAuthors(res) {
     bigContainer.className = "bigContainer";
     output.appendChild(bigContainer);
 
-    mainSpan = document.createElement("span");
+    mainSpan = document.createElement("div");
     mainSpan.className = "mainSpan";
     bigContainer.appendChild(mainSpan);
 
-    let titleSpan = document.createElement("span");
+    let titleSpan = document.createElement("h2");
     titleSpan.innerHTML = `${book["title"]}`;
     titleSpan.className = "title";
     mainSpan.appendChild(titleSpan);
-    let authorSpan = document.createElement("span");
-    authorSpan.innerHTML = `${book["authors"][0]["name"]}`;
+    let authorSpan = document.createElement("p");
+    authorSpan.className = "author";
+    authorSpan.innerHTML = `By ${book["authors"][0]["name"]}`;
     mainSpan.appendChild(authorSpan);
 
     let buttonDescription = document.createElement("button");
@@ -64,21 +72,22 @@ function showBooksTitleAndAuthors(res) {
     descriptionDiv.className = "descriptionDiv";
     mainSpan.appendChild(descriptionDiv);
 
-    let closeButton = document.createElement("button");
+    closeButton = document.createElement("button");
     closeButton.className = "closeButton";
+    closeButton.innerHTML = "close";
     descriptionDiv.appendChild(closeButton);
+    closeButton.addEventListener("click", closeDescription);
 
     descriptionSpan = document.createElement("p");
+    descriptionSpan.className = "descriptionSpan";
     descriptionDiv.appendChild(descriptionSpan);
 
     buttonDescription.addEventListener("click", () => {
       if (descriptionDiv.style.visibility === "hidden") {
         descriptionDiv.style.visibility = "visible";
-        closeButton.style.visibility = "visible";
         getDescription(key);
       } else {
         descriptionDiv.style.visibility = "hidden";
-        closeButton.style.visibility = "hidden";
       }
     });
   });
@@ -101,6 +110,11 @@ function getDescription(key) {
       }
     })
     .catch((err) => console.log(err));
+}
+
+function closeDescription() {
+  descriptionDiv.style.visibility = "hidden";
+  console.log("è impostato come visible ");
 }
 
 button.addEventListener("click", () => {
