@@ -14,6 +14,7 @@ let mainSpan;
 let descriptionDiv;
 let descriptionSpan;
 let closeButton;
+let research = document.getElementById("research");
 
 function setEmptyInputBox() {
   input = inputInitial.value;
@@ -35,10 +36,14 @@ function getBooksFiltered() {
     .then((res) => {
       console.log(res);
       if (res["data"]["work_count"] === 0) {
-        alert(`That's a bummer! ${input} does not count as genre. Try again!`);
+        alert(
+          `That's a bummer! "${_.toUpper(
+            input
+          )}" does not count as genre. Try again!`
+        );
       }
-      let research = document.getElementById("research");
-      research.innerHTML = `You searched for :'${input}'`;
+
+      research.innerHTML = `You searched for :'${_.toUpper(input)}'`;
 
       showBooksTitleAndAuthors(res);
     })
