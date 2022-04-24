@@ -35,9 +35,9 @@ function getBooksFiltered() {
     .then((res) => {
       console.log(res);
       if (res["data"]["work_count"] === 0) {
-        alert(`That's a bummer! ${input} does not count as genre`);
+        alert(`That's a bummer! ${input} does not count as genre. Try again!`);
       }
-      let research = document.createElement("p");
+      let research = document.getElementById("research");
       research.innerHTML = `You searched for :'${input}'`;
 
       showBooksTitleAndAuthors(res);
@@ -124,7 +124,6 @@ function getDescription(key) {
 
 function closeDescription() {
   descriptionDiv.style.visibility = "hidden";
-  console.log("è impostato come visible ");
 }
 
 button.addEventListener("click", () => {
