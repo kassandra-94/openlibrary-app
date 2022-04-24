@@ -15,9 +15,14 @@ let descriptionDiv;
 let descriptionSpan;
 let closeButton;
 
-function setInputEmpty() {
+function setEmptyInputBox() {
   input = inputInitial.value;
-  console.log(input);
+  input = _.toLower(input);
+  if (input[0] === " " || input[input.length - 1] === " ") {
+    input = _.trimStart(input);
+    input = _.trimEnd(input);
+  }
+  input = _.replace(`${input}`, " ", "_");
   document.getElementById("genre_input").value = "";
   if (output.hasChildNodes() && input !== "") {
     output.innerHTML = "";
@@ -32,6 +37,9 @@ function getBooksFiltered() {
       if (res["data"]["work_count"] === 0) {
         alert(`That's a bummer! ${input} does not count as genre`);
       }
+      let research = document.createElement("p");
+      research.innerHTML = `You searched for :'${input}'`;
+
       showBooksTitleAndAuthors(res);
     })
 
@@ -41,8 +49,10 @@ function getBooksFiltered() {
 function showBooksTitleAndAuthors(res) {
   let data = res.data;
   let books = data["works"];
-  let keys = books["key"];
+  let keys = data["key"];
+  console.log(`these are keys ${keys}`);
   console.log(keys);
+  console.log(`these are books ${books}`);
   console.log(books);
 
   books.forEach((book) => {
@@ -118,6 +128,6 @@ function closeDescription() {
 }
 
 button.addEventListener("click", () => {
-  setInputEmpty();
+  setEmptyInputBox();
   getBooksFiltered();
 });
