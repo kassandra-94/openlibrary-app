@@ -7,7 +7,6 @@ const booksUrl = `https://openlibrary.org/subjects/`;
 const booksDescription = `https://openlibrary.org`;
 
 let output = document.getElementById("output");
-let button = document.getElementById("buttonSearch");
 let inputInitial = document.getElementById("genre_input");
 let input;
 let mainSpan;
@@ -44,21 +43,16 @@ function getBooksFiltered() {
       }
 
       research.innerHTML = `You searched for :'${_.toUpper(input)}'`;
-
       showBooksTitleAndAuthors(res);
     })
 
-    .catch((err) => console.error("function getBooksFiltered error"));
+    .catch((err) =>
+      console.err("function getBooksFiltered has been not handles properly")
+    );
 }
 
 function showBooksTitleAndAuthors(res) {
-  let data = res.data;
-  let books = data["works"];
-  let keys = data["key"];
-  console.log(`these are keys ${keys}`);
-  console.log(keys);
-  console.log(`these are books ${books}`);
-  console.log(books);
+  let books = res.data["works"];
 
   books.forEach((book) => {
     let bigContainer = document.createElement("div");
@@ -79,10 +73,12 @@ function showBooksTitleAndAuthors(res) {
     mainSpan.appendChild(authorSpan);
 
     let buttonDescription = document.createElement("button");
+    buttonDescription.innerHTML = "info";
     buttonDescription.className = "buttonDescription";
     bigContainer.appendChild(buttonDescription);
 
     let key = book["key"];
+    console.log(typeof key);
     descriptionDiv = document.createElement("div");
     descriptionDiv.className = "descriptionDiv";
     mainSpan.appendChild(descriptionDiv);
@@ -100,6 +96,7 @@ function showBooksTitleAndAuthors(res) {
     buttonDescription.addEventListener("click", () => {
       if (descriptionDiv.style.visibility === "hidden") {
         descriptionDiv.style.visibility = "visible";
+        console.log("getdesription key" + getDescription(key));
         getDescription(key);
       } else {
         descriptionDiv.style.visibility = "hidden";
@@ -112,15 +109,14 @@ function getDescription(key) {
   axios
     .get(`${booksDescription + key}.json`)
     .then((response) => {
+      console.log("this is the response" + response);
       console.log(response);
-      console.log(response["data"]["description"]);
       let description = response["data"]["description"];
-
       if (typeof description === "object") {
-        descriptionSpan.innerHTML = `${response["data"]["description"].value}`;
+        descriptionSpan.innerHTML = `${description.value}`;
       } else if (typeof description === "string") {
-        descriptionSpan.innerHTML = `${response["data"]["description"]}`;
-      } else if (typeof description === "null") {
+        descriptionSpan.innerHTML = `${description}`;
+      } else {
         descriptionSpan.innerHTML = `We are very sorry but the description isn't available for this one`;
       }
     })
@@ -135,15 +131,10 @@ inputInitial.addEventListener("keydown", logkey);
 
 function logkey(e) {
   if (e.defaultPrevented) {
-    return; // Do nothing if event already handled
+    return;
   }
   if (e.key === "Enter") {
     setEmptyInputBox();
     getBooksFiltered();
   }
 }
-
-button.addEventListener("click", () => {
-  setEmptyInputBox();
-  getBooksFiltered();
-});
