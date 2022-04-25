@@ -48,7 +48,7 @@ function getBooksFiltered() {
       showBooksTitleAndAuthors(res);
     })
 
-    .catch((err) => console.error(err));
+    .catch((err) => console.error("function getBooksFiltered error"));
 }
 
 function showBooksTitleAndAuthors(res) {
@@ -129,6 +129,18 @@ function getDescription(key) {
 
 function closeDescription() {
   descriptionDiv.style.visibility = "hidden";
+}
+
+inputInitial.addEventListener("keydown", logkey);
+
+function logkey(e) {
+  if (e.defaultPrevented) {
+    return; // Do nothing if event already handled
+  }
+  if (e.key === "Enter") {
+    setEmptyInputBox();
+    getBooksFiltered();
+  }
 }
 
 button.addEventListener("click", () => {
