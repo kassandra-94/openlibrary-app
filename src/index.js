@@ -78,7 +78,6 @@ function showBooksTitleAndAuthors(res) {
     bigContainer.appendChild(buttonDescription);
 
     let key = book["key"];
-    console.log(typeof key);
     descriptionDiv = document.createElement("div");
     descriptionDiv.className = "descriptionDiv";
     mainSpan.appendChild(descriptionDiv);
